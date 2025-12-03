@@ -1,9 +1,8 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: postgresql
-  namespace: v2qa
-type: Opaque
-data:
-  postgresql-password: cGFzc3dvcmQ=
-
+  name: postgresql          # must match 'existingSecret' in values.yaml
+  namespace: v2qa           # must match the namespace where your pods are deployed
+stringData:
+  postgres-password: "admin"
+  replication-password: "admin"

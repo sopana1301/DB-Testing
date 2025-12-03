@@ -11,14 +11,14 @@ spec:
   sources:
     - chart: postgresql
       repoURL: https://charts.bitnami.com/bitnami
-      targetRevision: 15.5.20
+      targetRevision: 18.1.13             # Bitnami chart version compatible with image
       helm:
         valueFiles:
-          - $values/postgres-values.yaml
+          - values/postgres-values.yaml
 
     - repoURL: 'https://github.com/sopana1301/DB-Testing.git'
       targetRevision: main
-      ref: values
+      path: manifests                     # folder containing secret yaml
 
   syncPolicy:
     automated:

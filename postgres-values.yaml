@@ -1,52 +1,60 @@
 architecture: replication
 
+# Use official PostgreSQL image
+image:
+  repository: postgres
+  tag: "15"
+  pullPolicy: IfNotPresent
+
 global:
   postgresql:
     auth:
       existingSecret: postgresql
       database: postgres
-      storageClass: gp3
-      imageRegistry: "public.ecr.aws"
+      storageClass: hostpath        # <-- updated for Docker Desktop
+
 
 metrics:
   enabled: true
 
 primary:
+  persistence:
+    enabled: false                  # for local environment
+    size: 5Gi
+
+  resourcesPreset: xlarge
+
   extendedConfiguration: |
     max_connections = 3001
     shared_preload_libraries = 'pg_stat_statements'
     pg_stat_statements.track = all
     log_destination = 'stderr'
     logging_collector = on
-    log_directory = '/bitnami/postgresql/logs'
-    log_filename = 'postgresql.log'
-    log_connections = off
-    log_disconnections = off
     log_min_duration_statement = 1000
     log_statement = 'all'
-  persistence:
-    size: 20Gi
-  resourcesPreset: xlarge
 
 readReplicas:
   replicaCount: 2
+
+  persistence:
+    storageClass: hostpath          # ensure replicas use correct storage
+    size: 5Gi
+
+  resourcesPreset: xlarge
+
   extendedConfiguration: |
     max_connections = 3001
     shared_preload_libraries = 'pg_stat_statements'
     pg_stat_statements.track = all
     log_destination = 'stderr'
     logging_collector = on
-    log_directory = '/bitnami/postgresql/logs'
-    log_filename = 'postgresql.log'
-    log_connections = off
-    log_disconnections = off
     log_min_duration_statement = 1000
     log_statement = 'all'
-  persistence:
-    size: 20Gi
-  resourcesPreset: xlarge
 
 replication:
   enabled: true
   numSynchronousReplicas: 1
   synchronousCommit: "on"
+
+# Add only if not using existingSecret
+postgresqlPassword: admin123

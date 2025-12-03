@@ -14,7 +14,7 @@ spec:
       targetRevision: 15.5.20
       helm:
         valueFiles:
-          - postgres-values.yaml
+          - $values/postgres-values.yaml
 
     - repoURL: 'https://github.com/sopana1301/DB-Testing.git'
       targetRevision: main

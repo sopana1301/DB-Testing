@@ -1,7 +1,7 @@
 # Use official PostgreSQL image
 image:
   repository: bitnami/postgresql
-  tag: "15.5.20-debian-12-r0"
+  tag: "15.5.0-debian-12-r0"
   pullPolicy: IfNotPresent
 
 # Disable Bitnami-specific replication and presets
@@ -11,13 +11,12 @@ architecture: standalone
 metrics:
   enabled: false
 
-# Use local persistence (optional)
+# Primary settings
 primary:
   persistence:
     enabled: false
     size: 5Gi
 
-  # Remove Bitnami resourcesPreset
   resources: 
     requests:
       cpu: "500m"
@@ -26,7 +25,6 @@ primary:
       cpu: "1"
       memory: "1Gi"
 
-  # Standard PostgreSQL config (optional, official image supports env vars)
   extendedConfiguration: |
     max_connections = 300
     log_destination = 'stderr'
@@ -34,7 +32,7 @@ primary:
     log_min_duration_statement = 1000
     log_statement = 'all'
 
-# Remove readReplicas for simplicity (official image won't handle Bitnami replication)
+# No read replicas
 readReplicas:
   replicaCount: 0
 
@@ -42,6 +40,8 @@ readReplicas:
 replication:
   enabled: false
 
-# Use existing secret
+# Let Bitnami chart create password automatically
 auth:
-  existingSecret: postgresql
+  username: admin
+  password: root
+  database: mydb

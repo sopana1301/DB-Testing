@@ -2,7 +2,7 @@ architecture: replication
 
 # Use official PostgreSQL image
 image:
-  repository: postgresql
+  repository: postgres
   tag: "15"
   pullPolicy: IfNotPresent
 

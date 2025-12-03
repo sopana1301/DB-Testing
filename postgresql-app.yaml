@@ -18,7 +18,7 @@ spec:
 
     - repoURL: 'https://github.com/sopana1301/DB-Testing.git'
       targetRevision: main
-      path: manifests                     # folder containing secret yaml
+      ref: values                     # folder containing secret yaml
 
   syncPolicy:
     automated:

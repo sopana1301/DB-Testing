@@ -1,6 +1,6 @@
 # Use official PostgreSQL image
 image:
-  repository: postgres
+  repository: docker.io/library/postgres
   tag: "15"
   pullPolicy: IfNotPresent
 

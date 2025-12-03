@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgresql
+  namespace: uat
+stringData:
+  postgres-password: "admin"
+  replication-password: "admin"
+
+

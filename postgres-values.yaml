@@ -2,8 +2,8 @@ architecture: replication
 
 # Use official PostgreSQL image
 image:
-  repository: bitnami/postgresql
-  tag: "15.5.0"
+  repository: postgresql
+  tag: "15"
   pullPolicy: IfNotPresent
 
 global:

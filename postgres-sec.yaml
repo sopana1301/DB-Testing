@@ -3,8 +3,7 @@ kind: Secret
 metadata:
   name: postgresql
   namespace: v2qa
-stringData:
-  postgres-password: "admin"
-  replication-password: "admin"
-
+type: Opaque
+data:
+  postgresql-password: cGFzc3dvcmQ=
 

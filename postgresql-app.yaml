@@ -8,14 +8,18 @@ spec:
   destination:
     namespace: v2qa
     server: https://kubernetes.default.svc
-  source:
-    repoURL: 'https://github.com/sopana1301/DB-Testing.git'  # your repo
-    targetRevision: main
-    path: .                                                  # folder containing app + values
-    helm:
-      chart: postgresql                                     # chart name from Bitnami
-      valueFiles:
-        - postgres-values.yaml                               # relative to repo path
+  sources:
+    - chart: postgresql
+      repoURL: https://charts.bitnami.com/bitnami
+      targetRevision: 15.5.20
+      helm:
+        valueFiles:
+          - postgres-values.yaml
+
+    - repoURL: 'https://github.com/sopana1301/DB-Testing.git'
+      targetRevision: main
+      ref: values
+
   syncPolicy:
     automated:
       prune: true

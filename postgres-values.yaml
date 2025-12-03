@@ -1,7 +1,7 @@
 # Use official PostgreSQL image
 image:
-  repository: postgres
-  tag: "15"
+  repository: bitnamilegacy/postgresql
+  tag: "15.5.20-debian-12-r0"
   pullPolicy: IfNotPresent
 
 # Disable Bitnami-specific replication and presets

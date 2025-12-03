@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgresql-extended-configuration
+  namespace: v2qa
+data:
+  dummy: "1"

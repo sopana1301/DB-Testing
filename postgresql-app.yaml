@@ -17,7 +17,7 @@ spec:
           - postgres-values.yaml
 
     - repoURL: 'https://github.com/sopana1301/DB-Testing.git'
-      targetRevision: HEAD
+      targetRevision: main
       ref: values
 
   syncPolicy:

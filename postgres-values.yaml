@@ -56,5 +56,4 @@ replication:
   numSynchronousReplicas: 1
   synchronousCommit: "on"
 
-# Add only if not using existingSecret
-postgresqlPassword: admin123
+

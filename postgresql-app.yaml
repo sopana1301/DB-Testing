@@ -14,9 +14,9 @@ spec:
       targetRevision: 15.5.20
       helm:
         valueFiles:
-          - $values/Databases/postgres-values.yaml
+          - postgres-values.yaml
 
-    - repoURL: 'https://github.com/dWise-Healthcare-IT-Solutions-Pvt-Ltd/LT-QA-K8s-Stack.git'
+    - repoURL: 'https://github.com/sopana1301/DB-Testing.git'
       targetRevision: HEAD
       ref: values
 

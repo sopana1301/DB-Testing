@@ -1,59 +1,47 @@
-architecture: replication
-
 # Use official PostgreSQL image
 image:
   repository: postgres
   tag: "15"
   pullPolicy: IfNotPresent
 
-global:
-  postgresql:
-    auth:
-      existingSecret: postgresql
-      database: postgres
-      storageClass: hostpath        # <-- updated for Docker Desktop
+# Disable Bitnami-specific replication and presets
+architecture: standalone
 
-
+# Disable metrics (Bitnami)
 metrics:
   enabled: false
 
+# Use local persistence (optional)
 primary:
   persistence:
-    enabled: false                  # for local environment
+    enabled: false
     size: 5Gi
 
-  resourcesPreset: xlarge
+  # Remove Bitnami resourcesPreset
+  resources: 
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
 
+  # Standard PostgreSQL config (optional, official image supports env vars)
   extendedConfiguration: |
-    max_connections = 3001
-    shared_preload_libraries = 'pg_stat_statements'
-    pg_stat_statements.track = all
+    max_connections = 300
     log_destination = 'stderr'
     logging_collector = on
     log_min_duration_statement = 1000
     log_statement = 'all'
 
+# Remove readReplicas for simplicity (official image won't handle Bitnami replication)
 readReplicas:
-  replicaCount: 2
+  replicaCount: 0
 
-  persistence:
-    storageClass: hostpath          # ensure replicas use correct storage
-    size: 5Gi
-
-  resourcesPreset: xlarge
-
-  extendedConfiguration: |
-    max_connections = 3001
-    shared_preload_libraries = 'pg_stat_statements'
-    pg_stat_statements.track = all
-    log_destination = 'stderr'
-    logging_collector = on
-    log_min_duration_statement = 1000
-    log_statement = 'all'
-
+# Disable Bitnami replication
 replication:
-  enabled: true
-  numSynchronousReplicas: 1
-  synchronousCommit: "on"
+  enabled: false
 
-
+# Use existing secret
+auth:
+  existingSecret: postgresql

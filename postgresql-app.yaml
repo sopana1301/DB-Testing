@@ -10,7 +10,7 @@ spec:
     server: https://kubernetes.default.svc
   sources:
     - chart: postgresql
-      repoURL: https://charts.bitnami.com/bitnami
+      repoURL: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
       targetRevision: 15.5.15
       helm:
         valueFiles:

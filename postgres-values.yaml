@@ -1,53 +1,17 @@
+image:
+  repository: bitnamilegacy/postgresql
+  tag: 15.5.15
 
-architecture: replication
-
-global:
-  postgresql:
-    auth:
-      existingSecret: postgresql
-      database: postgres
-      storageClass: gp3
-      imageRegistry: "public.ecr.aws"
+volumePermissions:
+  enabled: true
+  image:
+    repository: bitnamilegacy/os-shell
 
 metrics:
   enabled: true
+  image:
+    repository: bitnamilegacy/postgres-exporter
 
-primary:
-  extendedConfiguration: |
-    max_connections = 3001
-    shared_preload_libraries = 'pg_stat_statements'
-    pg_stat_statements.track = all
-    log_destination = 'stderr'
-    logging_collector = on
-    log_directory = '/bitnami/postgresql/logs'
-    log_filename = 'postgresql.log'
-    log_connections = off
-    log_disconnections = off
-    log_min_duration_statement = 1000
-    log_statement = 'all'
-  persistence:
-    size: 20Gi
-  resourcesPreset: xlarge
-
-readReplicas:
-  replicaCount: 2
-  extendedConfiguration: |
-    max_connections = 3001
-    shared_preload_libraries = 'pg_stat_statements'
-    pg_stat_statements.track = all
-    log_destination = 'stderr'
-    logging_collector = on
-    log_directory = '/bitnami/postgresql/logs'
-    log_filename = 'postgresql.log'
-    log_connections = off
-    log_disconnections = off
-    log_min_duration_statement = 1000
-    log_statement = 'all'
-  persistence:
-    size: 20Gi
-  resourcesPreset: xlarge
-
-replication:
-  enabled: true
-  numSynchronousReplicas: 1
-  synchronousCommit: "on"
+global:
+  security:
+    allowInsecureImages: true

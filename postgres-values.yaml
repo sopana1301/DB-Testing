@@ -1,47 +1,53 @@
-# Use official PostgreSQL image
-image:
-  repository: bitnami/postgresql
-  tag: "15.5.0-debian-12-r0"
-  pullPolicy: IfNotPresent
 
-# Disable Bitnami-specific replication and presets
-architecture: standalone
+architecture: replication
 
-# Disable metrics (Bitnami)
+global:
+  postgresql:
+    auth:
+      existingSecret: postgresql
+      database: postgres
+      storageClass: gp3
+      imageRegistry: "public.ecr.aws"
+
 metrics:
-  enabled: false
+  enabled: true
 
-# Primary settings
 primary:
-  persistence:
-    enabled: false
-    size: 5Gi
-
-  resources: 
-    requests:
-      cpu: "500m"
-      memory: "512Mi"
-    limits:
-      cpu: "1"
-      memory: "1Gi"
-
   extendedConfiguration: |
-    max_connections = 300
+    max_connections = 3001
+    shared_preload_libraries = 'pg_stat_statements'
+    pg_stat_statements.track = all
     log_destination = 'stderr'
     logging_collector = on
+    log_directory = '/bitnami/postgresql/logs'
+    log_filename = 'postgresql.log'
+    log_connections = off
+    log_disconnections = off
     log_min_duration_statement = 1000
     log_statement = 'all'
+  persistence:
+    size: 20Gi
+  resourcesPreset: xlarge
 
-# No read replicas
 readReplicas:
-  replicaCount: 0
+  replicaCount: 2
+  extendedConfiguration: |
+    max_connections = 3001
+    shared_preload_libraries = 'pg_stat_statements'
+    pg_stat_statements.track = all
+    log_destination = 'stderr'
+    logging_collector = on
+    log_directory = '/bitnami/postgresql/logs'
+    log_filename = 'postgresql.log'
+    log_connections = off
+    log_disconnections = off
+    log_min_duration_statement = 1000
+    log_statement = 'all'
+  persistence:
+    size: 20Gi
+  resourcesPreset: xlarge
 
-# Disable Bitnami replication
 replication:
-  enabled: false
-
-# Let Bitnami chart create password automatically
-auth:
-  username: admin
-  password: root
-  database: mydb
+  enabled: true
+  numSynchronousReplicas: 1
+  synchronousCommit: "on"

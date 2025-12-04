@@ -1,26 +1,16 @@
+
 architecture: replication
 
 global:
   postgresql:
     auth:
+      existingSecret: postgresql
       database: postgres
-      username: postgres
-  security:
-    allowInsecureImages: true
-
-image:
-  repository: bitnamilegacy/postgresql
-  tag: 16.3.0-debian-12-r19
-
-volumePermissions:
-  enabled: true
-  image:
-    repository: bitnamilegacy/os-shell
+      storageClass: gp3
+      imageRegistry: "public.ecr.aws"
 
 metrics:
   enabled: true
-  image:
-    repository: bitnamilegacy/postgres-exporter
 
 primary:
   extendedConfiguration: |

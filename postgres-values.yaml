@@ -4,7 +4,6 @@ architecture: replication
 global:
   postgresql:
     auth:
-      existingSecret: postgresql
       database: postgres
       storageClass: gp3
       imageRegistry: "public.ecr.aws"

@@ -15,6 +15,18 @@ spec:
       helm:
         valueFiles:
           - $values/postgres-values.yaml
+        values: |
+          image:
+            repository: bitnamilegacy/postgresql
+            tag: 16.3.0-debian-12-r19
+          volumePermissions:
+            enabled: true
+            image:
+              repository: bitnamilegacy/os-shell
+          metrics:
+            enabled: true
+            image:
+              repository: bitnamilegacy/postgres-exporter  
 
     - repoURL: 'https://github.com/sopana1301/DB-Testing.git'
       targetRevision: HEAD

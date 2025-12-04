@@ -3,16 +3,14 @@ architecture: replication
 global:
   postgresql:
     auth:
-      existingSecret: postgresql
       database: postgres
-      storageClass: hostpath
-      imageRegistry: "public.ecr.aws"
+      username: postgres
   security:
     allowInsecureImages: true
 
 image:
   repository: bitnamilegacy/postgresql
-  tag: 15.5.15
+  tag: 15.2.6-debian-11-r0
 
 volumePermissions:
   enabled: true
